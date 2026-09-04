@@ -1,0 +1,313 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Base user account profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 150 },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "country": { "type": "string", "maxLength": 60 },
+        "province": { "type": "string", "maxLength": 60 },
+        "city": { "type": "string", "maxLength": 60 },
+        "bio": { "type": "string", "maxLength": 1000 },
+        "accountType": { "type": "string", "enum": ["requester", "specialist", "both", "admin"] },
+        "activeMode": { "type": "string", "enum": ["requester", "specialist", "admin"] },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "suspended", "pending"] }
+      },
+      "required": ["uid", "email", "displayName", "accountType", "activeMode"]
+    },
+    "SpecialistProfile": {
+      "title": "SpecialistProfile",
+      "description": "Professional profile details for specialists",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "professionalName": { "type": "string", "maxLength": 120 },
+        "headline": { "type": "string", "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 3000 },
+        "categories": { "type": "array" },
+        "skills": { "type": "array" },
+        "experienceYears": { "type": "number" },
+        "location": { "type": "string", "maxLength": 100 },
+        "serviceArea": { "type": "string", "maxLength": 100 },
+        "remoteAvailable": { "type": "boolean" },
+        "hourlyRate": { "type": "number" },
+        "responseTime": { "type": "string", "maxLength": 50 },
+        "completedJobs": { "type": "number" },
+        "ratingAverage": { "type": "number" },
+        "ratingCount": { "type": "number" },
+        "verificationStatus": { "type": "string", "enum": ["unverified", "pending", "verified"] },
+        "profileStatus": { "type": "string", "enum": ["draft", "active", "paused"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "professionalName", "headline"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Hierarchical category for marketplace services and requests",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 60 },
+        "name": { "type": "string", "maxLength": 80 },
+        "slug": { "type": "string", "maxLength": 80 },
+        "description": { "type": "string", "maxLength": 300 },
+        "icon": { "type": "string", "maxLength": 50 },
+        "subcategories": { "type": "array" },
+        "order": { "type": "number" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Services published by specialists",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "specialistId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 150 },
+        "slug": { "type": "string", "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "categoryId": { "type": "string", "maxLength": 60 },
+        "subcategoryId": { "type": "string", "maxLength": 60 },
+        "images": { "type": "array" },
+        "pricingType": { "type": "string", "enum": ["fixed", "from", "quote"] },
+        "basePrice": { "type": "number" },
+        "priceFrom": { "type": "number" },
+        "estimatedDuration": { "type": "string", "maxLength": 50 },
+        "deliveryDays": { "type": "number" },
+        "locationType": { "type": "string", "enum": ["remote", "onsite", "hybrid"] },
+        "location": { "type": "string", "maxLength": 100 },
+        "requirements": { "type": "string", "maxLength": 2000 },
+        "tags": { "type": "array" },
+        "status": { "type": "string", "enum": ["active", "paused", "draft"] },
+        "views": { "type": "number" },
+        "favorites": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "specialistId", "title", "categoryId", "pricingType"]
+    },
+    "ServiceRequest": {
+      "title": "ServiceRequest",
+      "description": "Job or service request published by a requester",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "requesterId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "categoryId": { "type": "string", "maxLength": 60 },
+        "subcategoryId": { "type": "string", "maxLength": 60 },
+        "budgetMin": { "type": "number" },
+        "budgetMax": { "type": "number" },
+        "location": { "type": "string", "maxLength": 100 },
+        "remote": { "type": "boolean" },
+        "deadline": { "type": "string", "maxLength": 60 },
+        "proposalsCount": { "type": "number" },
+        "status": { "type": "string", "enum": ["draft", "published", "receivingOffers", "inNegotiation", "contracted", "completed", "cancelled", "expired"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "requesterId", "title", "description", "categoryId", "status"]
+    },
+    "Proposal": {
+      "title": "Proposal",
+      "description": "Formal proposal submitted by a specialist for a service request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "requestId": { "type": "string", "maxLength": 128 },
+        "specialistId": { "type": "string", "maxLength": 128 },
+        "price": { "type": "number" },
+        "estimatedDelivery": { "type": "string", "maxLength": 60 },
+        "deliveryDays": { "type": "number" },
+        "message": { "type": "string", "maxLength": 3000 },
+        "status": { "type": "string", "enum": ["pending", "viewed", "shortlisted", "accepted", "rejected", "withdrawn", "expired"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "requestId", "specialistId", "price", "message", "status"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Contracted job or work agreement between requester and specialist",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "requestId": { "type": "string", "maxLength": 128 },
+        "proposalId": { "type": "string", "maxLength": 128 },
+        "requesterId": { "type": "string", "maxLength": 128 },
+        "specialistId": { "type": "string", "maxLength": 128 },
+        "serviceId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 160 },
+        "agreedPrice": { "type": "number" },
+        "platformFee": { "type": "number" },
+        "specialistAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pendingPayment", "funded", "inProgress", "submitted", "revision", "completed", "disputed", "cancelled", "refunded"] },
+        "startDate": { "type": "string" },
+        "estimatedCompletionDate": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "requesterId", "specialistId", "agreedPrice", "status"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Direct chat conversation between participants",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "participantIds": { "type": "array" },
+        "requestId": { "type": "string", "maxLength": 128 },
+        "jobId": { "type": "string", "maxLength": 128 },
+        "serviceId": { "type": "string", "maxLength": 128 },
+        "lastMessage": { "type": "string", "maxLength": 1000 },
+        "lastSenderId": { "type": "string", "maxLength": 128 },
+        "unreadCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "participantIds"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat message inside a conversation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "conversationId": { "type": "string", "maxLength": 128 },
+        "senderId": { "type": "string", "maxLength": 128 },
+        "text": { "type": "string", "maxLength": 3000 },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "conversationId", "senderId", "text"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Completed work rating and review",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "jobId": { "type": "string", "maxLength": 128 },
+        "reviewerId": { "type": "string", "maxLength": 128 },
+        "reviewedUserId": { "type": "string", "maxLength": 128 },
+        "rating": { "type": "number" },
+        "comment": { "type": "string", "maxLength": 1500 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "jobId", "reviewerId", "reviewedUserId", "rating", "comment"]
+    },
+    "Wallet": {
+      "title": "Wallet",
+      "description": "Internal ledger wallet for users and specialists",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "balance": { "type": "number" },
+        "pendingBalance": { "type": "number" },
+        "availableBalance": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "balance", "availableBalance", "currency"]
+    },
+    "WalletTransaction": {
+      "title": "WalletTransaction",
+      "description": "Immutable ledger transaction entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "walletId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["credit", "debit", "commission", "refund", "withdrawal", "payment", "hold", "release"] },
+        "status": { "type": "string", "enum": ["completed", "pending", "failed"] },
+        "description": { "type": "string", "maxLength": 300 },
+        "jobId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "walletId", "userId", "amount", "type", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app notifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 150 },
+        "message": { "type": "string", "maxLength": 500 },
+        "type": { "type": "string", "maxLength": 50 },
+        "link": { "type": "string", "maxLength": 200 },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message", "type", "read"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and settings"
+    },
+    "/specialistProfiles/{userId}": {
+      "schema": "SpecialistProfile",
+      "description": "Specialist public and professional details"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Marketplace service categories"
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Published services"
+    },
+    "/serviceRequests/{requestId}": {
+      "schema": "ServiceRequest",
+      "description": "Client requested services"
+    },
+    "/proposals/{proposalId}": {
+      "schema": "Proposal",
+      "description": "Specialist quotes and offers"
+    },
+    "/jobs/{jobId}": {
+      "schema": "Job",
+      "description": "Agreed jobs and contracts"
+    },
+    "/conversations/{conversationId}": {
+      "schema": "Conversation",
+      "description": "Direct chat rooms"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Individual chat messages"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Post-job evaluations and ratings"
+    },
+    "/wallets/{walletId}": {
+      "schema": "Wallet",
+      "description": "User balance ledger"
+    },
+    "/walletTransactions/{transactionId}": {
+      "schema": "WalletTransaction",
+      "description": "Immutable ledger transactions"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications"
+    }
+  }
+}

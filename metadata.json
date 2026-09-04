@@ -1,0 +1,6 @@
+{
+  "name": "AGO Marketplace",
+  "description": "Plataforma integral de contratación y gestión de servicios profesionales y especializados.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
