@@ -131,14 +131,25 @@ El archivo `firestore.rules` ya está configurado y desplegado con las siguiente
 
 ---
 
+## 🌐 Despliegue en GitHub Pages
+
+Para visualizar la aplicación en **GitHub Pages** sin errores de pantalla blanca:
+
+1. Ve a tu repositorio en GitHub: `https://github.com/agoserviplace-a11y/AGO_SERVIPLACE`.
+2. Dirígete a la pestaña **Settings** (Configuración) > **Pages** (en el menú lateral izquierdo).
+3. En la sección **Build and deployment > Source**, cambia de *"Deploy from a branch"* a **GitHub Actions**.
+4. ¡Listo! Cada vez que se haga push a `main`, el workflow configurado en `.github/workflows/deploy.yml` compilará la aplicación (`npm run build`) y la publicará automáticamente en tu dirección:
+   `https://agoserviplace-a11y.github.io/AGO_SERVIPLACE/`
+
+---
+
 ## 📤 Subir a tu Repositorio de GitHub
 
 El repositorio local ya está inicializado y listo. Para vincularlo a tu repositorio remoto en GitHub:
 
-1. Crea un repositorio nuevo en GitHub (por ejemplo: `ago-marketplace`).
-2. En la terminal de este proyecto, ejecuta:
+1. En la terminal de este proyecto, ejecuta:
    ```bash
-   git remote add origin https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+   git remote add origin https://github.com/agoserviplace-a11y/AGO_SERVIPLACE.git
    git branch -M main
    git push -u origin main
    ```
